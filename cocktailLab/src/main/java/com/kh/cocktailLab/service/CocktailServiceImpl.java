@@ -44,7 +44,7 @@ public class CocktailServiceImpl implements CocktailService {
     
     @Override
     public List<CocktailResponse> getAllCocktails(Long currentMemberNo) {
-        List<Cocktail> cocktails = cocktailRepository.findAllWithLikes();
+        List<Cocktail> cocktails = cocktailRepository.findAll();
         
         return cocktails.stream()
                 .map(cocktail -> {
@@ -73,7 +73,7 @@ public class CocktailServiceImpl implements CocktailService {
     
     @Override
     public List<CocktailResponse> getCocktailsByMember(Long memberNo) {
-        List<Cocktail> cocktails = cocktailRepository.findByMemberNoWithMember(memberNo);
+        List<Cocktail> cocktails = cocktailRepository.findByMemberMemberNo(memberNo);
         
         return cocktails.stream()
                 .map(CocktailResponse::from)

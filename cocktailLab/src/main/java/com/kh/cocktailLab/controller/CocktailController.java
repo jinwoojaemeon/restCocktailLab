@@ -42,8 +42,9 @@ public class CocktailController {
     
     // 칵테일 전체 조회
     @GetMapping
-    public ResponseEntity<List<CocktailResponse>> getCocktails() {
-        List<CocktailResponse> responses = cocktailService.getAllCocktails(null);
+    public ResponseEntity<List<CocktailResponse>> getCocktails(
+            @RequestParam(required = false) Long memberNo) {
+        List<CocktailResponse> responses = cocktailService.getAllCocktails(memberNo);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
     
