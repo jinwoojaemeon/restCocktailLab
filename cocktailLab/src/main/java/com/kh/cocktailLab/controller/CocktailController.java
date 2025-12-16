@@ -24,22 +24,10 @@ public class CocktailController {
     // 칵테일 생성
     @PostMapping
     public ResponseEntity<String> createCocktail(
-            CocktailRequest request,
-            @RequestParam(value = "upfile", required = false) MultipartFile upfile) throws IOException {
+            @Valid @RequestBody CocktailRequest request) {
         
         if (request == null || request.getMemberNo() == null) {
             return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.BAD_REQUEST);
-        }
-        
-        // 파일 업로드 처리
-        if (upfile != null && !upfile.isEmpty()) {
-            File uploadDir = new File("C:\\khWorkspace\\07_RestServer\\cocktailLab\\src\\main\\resources\\uploads");
-            if (!uploadDir.exists()) {
-                uploadDir.mkdirs();
-            }
-            File file = new File(uploadDir, upfile.getOriginalFilename());
-            upfile.transferTo(file);
-            request.setCocktailImagePath("/uploads/" + upfile.getOriginalFilename());
         }
         
         CocktailResponse response = cocktailService.createCocktail(request, request.getMemberNo());
@@ -79,22 +67,10 @@ public class CocktailController {
     @PutMapping("/{cocktailNo}")
     public ResponseEntity<String> updateCocktail(
             @PathVariable Long cocktailNo,
-            CocktailRequest request,
-            @RequestParam(value = "upfile", required = false) MultipartFile upfile) throws IOException {
+            @Valid @RequestBody CocktailRequest request) {
         
         if (request == null || request.getMemberNo() == null) {
             return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.BAD_REQUEST);
-        }
-        
-        // 파일 업로드 처리
-        if (upfile != null && !upfile.isEmpty()) {
-            File uploadDir = new File("C:\\khWorkspace\\07_RestServer\\cocktailLab\\src\\main\\resources\\uploads");
-            if (!uploadDir.exists()) {
-                uploadDir.mkdirs();
-            }
-            File file = new File(uploadDir, upfile.getOriginalFilename());
-            upfile.transferTo(file);
-            request.setCocktailImagePath("/uploads/" + upfile.getOriginalFilename());
         }
         
         CocktailResponse response = cocktailService.updateCocktail(cocktailNo, request, request.getMemberNo());
