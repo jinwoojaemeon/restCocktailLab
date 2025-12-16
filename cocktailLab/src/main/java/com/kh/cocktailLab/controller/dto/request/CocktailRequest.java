@@ -18,6 +18,8 @@ import java.util.List;
 @AllArgsConstructor
 public class CocktailRequest {
     
+    private Long memberNo; // 회원 번호
+    
     @NotBlank(message = "칵테일 이름은 필수입니다.")
     private String cocktailName;
     

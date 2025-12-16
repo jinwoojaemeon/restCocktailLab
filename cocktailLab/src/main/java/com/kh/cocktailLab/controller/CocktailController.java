@@ -1,7 +1,6 @@
 package com.kh.cocktailLab.controller;
 
 import com.kh.cocktailLab.dto.request.CocktailRequest;
-import com.kh.cocktailLab.dto.response.ApiResponse;
 import com.kh.cocktailLab.dto.response.CocktailResponse;
 import com.kh.cocktailLab.service.CocktailService;
 import jakarta.validation.Valid;
@@ -22,32 +21,14 @@ public class CocktailController {
     
     private final CocktailService cocktailService;
     
-    // 칵테일 생성 (JSON 형식 - React에서 사용)
+    // 칵테일 생성
     @PostMapping
-    public ResponseEntity<ApiResponse<CocktailResponse>> createCocktail(
-            @Valid @RequestBody CocktailRequest request,
-            @RequestHeader(value = "X-Member-No", required = false) Long memberNo) {
+    public ResponseEntity<String> createCocktail(
+            CocktailRequest request,
+            @RequestParam(value = "upfile", required = false) MultipartFile upfile) throws IOException {
         
-        if (memberNo == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(ApiResponse.error("로그인이 필요합니다."));
-        }
-        
-        CocktailResponse response = cocktailService.createCocktail(request, memberNo);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.success("칵테일이 생성되었습니다.", response));
-    }
-    
-    // 칵테일 생성 (Form-data 형식 - 파일 업로드 포함)
-    @PostMapping("/with-file")
-    public ResponseEntity<ApiResponse<CocktailResponse>> createCocktailWithFile(
-            @Valid @ModelAttribute CocktailRequest request,
-            @RequestParam(value = "upfile", required = false) MultipartFile upfile,
-            @RequestHeader(value = "X-Member-No", required = false) Long memberNo) throws IOException {
-        
-        if (memberNo == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(ApiResponse.error("로그인이 필요합니다."));
+        if (request == null || request.getMemberNo() == null) {
+            return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.BAD_REQUEST);
         }
         
         // 파일 업로드 처리
@@ -61,66 +42,48 @@ public class CocktailController {
             request.setCocktailImagePath("/uploads/" + upfile.getOriginalFilename());
         }
         
-        CocktailResponse response = cocktailService.createCocktail(request, memberNo);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(ApiResponse.success("칵테일이 생성되었습니다.", response));
+        CocktailResponse response = cocktailService.createCocktail(request, request.getMemberNo());
+        
+        if (response != null) {
+            return new ResponseEntity<>("칵테일 등록 성공", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("칵테일 등록 실패", HttpStatus.BAD_REQUEST);
+        }
     }
+    
     
     // 칵테일 전체 조회
     @GetMapping
-    public ResponseEntity<ApiResponse<List<CocktailResponse>>> getAllCocktails(
-            @RequestHeader(value = "X-Member-No", required = false) Long memberNo) {
-        
-        List<CocktailResponse> responses = cocktailService.getAllCocktails(memberNo);
-        return ResponseEntity.ok(ApiResponse.success(responses));
+    public ResponseEntity<List<CocktailResponse>> getCocktails() {
+        List<CocktailResponse> responses = cocktailService.getAllCocktails(null);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
     }
     
     // 칵테일 상세 조회
     @GetMapping("/{cocktailNo}")
-    public ResponseEntity<ApiResponse<CocktailResponse>> getCocktail(
-            @PathVariable Long cocktailNo,
-            @RequestHeader(value = "X-Member-No", required = false) Long memberNo) {
-        
-        CocktailResponse response = cocktailService.getCocktail(cocktailNo, memberNo);
-        return ResponseEntity.ok(ApiResponse.success(response));
+    public ResponseEntity<CocktailResponse> getCocktail(@PathVariable Long cocktailNo) {
+        CocktailResponse response = cocktailService.getCocktail(cocktailNo, null);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     
     // 회원별 칵테일 조회
     @GetMapping("/members/{memberNo}")
-    public ResponseEntity<ApiResponse<List<CocktailResponse>>> getCocktailsByMember(
+    public ResponseEntity<List<CocktailResponse>> getCocktailsByMember(
             @PathVariable Long memberNo) {
         
         List<CocktailResponse> responses = cocktailService.getCocktailsByMember(memberNo);
-        return ResponseEntity.ok(ApiResponse.success(responses));
+        return new ResponseEntity<>(responses, HttpStatus.OK);
     }
     
-    // 칵테일 수정 (JSON 형식 - React에서 사용)
+    // 칵테일 수정
     @PutMapping("/{cocktailNo}")
-    public ResponseEntity<ApiResponse<CocktailResponse>> updateCocktail(
+    public ResponseEntity<String> updateCocktail(
             @PathVariable Long cocktailNo,
-            @Valid @RequestBody CocktailRequest request,
-            @RequestHeader(value = "X-Member-No", required = false) Long memberNo) {
+            CocktailRequest request,
+            @RequestParam(value = "upfile", required = false) MultipartFile upfile) throws IOException {
         
-        if (memberNo == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(ApiResponse.error("로그인이 필요합니다."));
-        }
-        
-        CocktailResponse response = cocktailService.updateCocktail(cocktailNo, request, memberNo);
-        return ResponseEntity.ok(ApiResponse.success("칵테일이 수정되었습니다.", response));
-    }
-    
-    // 칵테일 수정 (Form-data 형식 - 파일 업로드 포함)
-    @PutMapping("/{cocktailNo}/with-file")
-    public ResponseEntity<ApiResponse<CocktailResponse>> updateCocktailWithFile(
-            @PathVariable Long cocktailNo,
-            @Valid @ModelAttribute CocktailRequest request,
-            @RequestParam(value = "upfile", required = false) MultipartFile upfile,
-            @RequestHeader(value = "X-Member-No", required = false) Long memberNo) throws IOException {
-        
-        if (memberNo == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(ApiResponse.error("로그인이 필요합니다."));
+        if (request == null || request.getMemberNo() == null) {
+            return new ResponseEntity<>("로그인이 필요합니다.", HttpStatus.BAD_REQUEST);
         }
         
         // 파일 업로드 처리
@@ -134,23 +97,19 @@ public class CocktailController {
             request.setCocktailImagePath("/uploads/" + upfile.getOriginalFilename());
         }
         
-        CocktailResponse response = cocktailService.updateCocktail(cocktailNo, request, memberNo);
-        return ResponseEntity.ok(ApiResponse.success("칵테일이 수정되었습니다.", response));
+        CocktailResponse response = cocktailService.updateCocktail(cocktailNo, request, request.getMemberNo());
+        return new ResponseEntity<>("칵테일 수정완료", HttpStatus.OK);
     }
+    
     
     // 칵테일 삭제
     @DeleteMapping("/{cocktailNo}")
-    public ResponseEntity<ApiResponse<Void>> deleteCocktail(
+    public ResponseEntity<String> deleteCocktail(
             @PathVariable Long cocktailNo,
-            @RequestHeader(value = "X-Member-No", required = false) Long memberNo) {
-        
-        if (memberNo == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(ApiResponse.error("로그인이 필요합니다."));
-        }
+            @RequestParam Long memberNo) {
         
         cocktailService.deleteCocktail(cocktailNo, memberNo);
-        return ResponseEntity.ok(ApiResponse.success("칵테일이 삭제되었습니다.", null));
+        return new ResponseEntity<>("칵테일 삭제완료", HttpStatus.OK);
     }
 }
 
