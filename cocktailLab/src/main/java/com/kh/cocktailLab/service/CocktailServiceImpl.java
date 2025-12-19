@@ -7,7 +7,6 @@ import com.kh.cocktailLab.entity.Member;
 import com.kh.cocktailLab.repository.CocktailRepository;
 import com.kh.cocktailLab.repository.LikeRepository;
 import com.kh.cocktailLab.repository.MemberRepository;
-import com.kh.cocktailLab.service.CocktailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

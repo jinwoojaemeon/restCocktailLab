@@ -13,7 +13,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "LIKE_TABLE", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"cocktail_no", "member_no"})
 })
-public class Like extends BaseTimeEntity {
+public class Like {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
