@@ -97,7 +97,7 @@ restCocktail/
 ```
 
 ## 📅 ERD
-<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/YCzjLw9K/cocktail-Lab.png' border='0' alt='cocktail-Lab'></a>
+<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/hvD2gnfm/cocktail-Lab-(1).png' border='0' alt='cocktail-Lab-(1)'></a>
 
 
 ## 🌟 주요 기능 (Key Features)
