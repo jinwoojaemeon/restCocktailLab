@@ -1,0 +1,49 @@
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Java/Gradle (cocktailLab)
+cocktailLab/.gradle/
+cocktailLab/build/
+cocktailLab/bin/
+cocktailLab/out/
+cocktailLab/.idea/
+cocktailLab/*.iml
+cocktailLab/.sts4-cache/
+
+# Node/React (react-cocktailLab-project)
+react-cocktailLab-project/node_modules/
+react-cocktailLab-project/dist/
+react-cocktailLab-project/build/
+react-cocktailLab-project/.vite/
+react-cocktailLab-project/.cache/
+react-cocktailLab-project/.parcel-cache/
+react-cocktailLab-project/.npm/
+react-cocktailLab-project/.eslintcache/
+react-cocktailLab-project/coverage/
+react-cocktailLab-project/*.log
+react-cocktailLab-project/.env
+react-cocktailLab-project/.env*.local
