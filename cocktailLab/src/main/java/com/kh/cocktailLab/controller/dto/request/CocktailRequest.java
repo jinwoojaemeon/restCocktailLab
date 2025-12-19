@@ -1,6 +1,7 @@
 package com.kh.cocktailLab.dto.request;
 
 import com.kh.cocktailLab.entity.Cocktail;
+import com.kh.cocktailLab.entity.CocktailType;
 import com.kh.cocktailLab.entity.Member;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -40,7 +41,8 @@ public class CocktailRequest {
                 .ingredients(this.ingredients != null ? new ArrayList<>(this.ingredients) : new ArrayList<>())
                 .instructions(this.instructions)
                 .cocktailImagePath(this.cocktailImagePath)
-                .member(member)
+                .cocktailType(CocktailType.CUSTOM) // 사용자가 만드는 칵테일은 항상 CUSTOM
+                .member(member) 
                 .build();
     }
     
@@ -53,6 +55,7 @@ public class CocktailRequest {
                 .ingredients(this.ingredients != null ? new ArrayList<>(this.ingredients) : new ArrayList<>())
                 .instructions(this.instructions)
                 .cocktailImagePath(this.cocktailImagePath)
+                .cocktailType(existingCocktail.getCocktailType()) // 기존 타입 유지
                 .member(existingCocktail.getMember())
                 .likes(existingCocktail.getLikes())
                 .build();

@@ -26,6 +26,13 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
         format_sql: true
+    # 초기 데이터 삽입 설정 (data.sql 사용 시)
+    # defer-datasource-initialization: true
+
+# 초기 데이터 설정
+cocktail:
+  initial-data:
+    enabled: true  # 초기 데이터 삽입 활성화/비활성화
 
 server:
   port: 8888

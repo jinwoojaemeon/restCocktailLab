@@ -1,6 +1,7 @@
 package com.kh.cocktailLab.dto.response;
 
 import com.kh.cocktailLab.entity.Cocktail;
+import com.kh.cocktailLab.entity.CocktailType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class CocktailResponse {
     private List<String> ingredients;
     private String instructions;
     private String cocktailImagePath;
+    private CocktailType cocktailType; // 칵테일 타입 (DEFAULT: 일반 레시피, CUSTOM: 커스텀 칵테일)
     private Long memberNo; // 작성자 번호
     private String memberId; // 작성자 아이디
     private String nickname; // 작성자 닉네임
@@ -38,6 +40,7 @@ public class CocktailResponse {
                 .ingredients(cocktail.getIngredients())
                 .instructions(cocktail.getInstructions())
                 .cocktailImagePath(cocktail.getCocktailImagePath())
+                .cocktailType(cocktail.getCocktailType())
                 .memberNo(cocktail.getMember().getMemberNo())
                 .memberId(cocktail.getMember().getMemberId())
                 .nickname(cocktail.getMember().getNickname())
@@ -56,6 +59,7 @@ public class CocktailResponse {
                 .ingredients(cocktail.getIngredients())
                 .instructions(cocktail.getInstructions())
                 .cocktailImagePath(cocktail.getCocktailImagePath())
+                .cocktailType(cocktail.getCocktailType())
                 .memberNo(cocktail.getMember().getMemberNo())
                 .memberId(cocktail.getMember().getMemberId())
                 .nickname(cocktail.getMember().getNickname())

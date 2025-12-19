@@ -43,6 +43,12 @@ public class Cocktail extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String cocktailImagePath;
 
+    // 칵테일 타입 (일반 레시피 / 커스텀 칵테일)
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    @Builder.Default
+    private CocktailType cocktailType = CocktailType.CUSTOM;
+
     // 연관관계 매핑
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no", nullable = false)

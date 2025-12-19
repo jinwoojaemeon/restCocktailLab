@@ -88,6 +88,13 @@ public class CocktailServiceImpl implements CocktailService {
                         HttpStatus.NOT_FOUND, 
                         "칵테일을 찾을 수 없습니다."));
         
+        // 일반 레시피는 수정 불가
+        if (cocktail.getCocktailType() == com.kh.cocktailLab.entity.CocktailType.DEFAULT) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN, 
+                    "일반 레시피는 수정할 수 없습니다.");
+        }
+        
         // 작성자 확인
         if (!cocktail.getMember().getMemberNo().equals(memberNo)) {
             throw new ResponseStatusException(
@@ -110,6 +117,13 @@ public class CocktailServiceImpl implements CocktailService {
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND, 
                         "칵테일을 찾을 수 없습니다."));
+        
+        // 일반 레시피는 삭제 불가
+        if (cocktail.getCocktailType() == com.kh.cocktailLab.entity.CocktailType.DEFAULT) {
+            throw new ResponseStatusException(
+                    HttpStatus.FORBIDDEN, 
+                    "일반 레시피는 삭제할 수 없습니다.");
+        }
         
         // 작성자 확인
         if (!cocktail.getMember().getMemberNo().equals(memberNo)) {
