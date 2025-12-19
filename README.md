@@ -54,8 +54,6 @@ npm install
 npm run dev
 ```
 
-**프론트엔드 주소**: `http://localhost:5173`
-
 ### 4. 데이터베이스 접속 (H2 Console)
 - 브라우저에서 접속: `http://localhost:8888/h2-console`
 - JDBC URL: `jdbc:h2:tcp://localhost/C:\khWorkspace\07_RestServer\db\tdb`
@@ -97,6 +95,10 @@ restCocktail/
 │
 └── README.md                       # 통합 문서 (현재 파일)
 ```
+
+## 📅 ERD
+<a href='https://postimages.org/' target='_blank'><img src='https://i.postimg.cc/YCzjLw9K/cocktail-Lab.png' border='0' alt='cocktail-Lab'></a>
+
 
 ## 🌟 주요 기능 (Key Features)
 
