@@ -71,7 +71,7 @@ public class DataInitializer implements ApplicationRunner {
         // 1. 기본 Member 생성 (일반 칵테일용 시스템 계정)
         Member systemMember = Member.builder()
                 .memberId("system")
-                .userPwd("system")
+                .memberPwd("system")
                 .nickname("시스템")
                 .email("system@cocktaillab.com")
                 .build();

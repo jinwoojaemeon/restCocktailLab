@@ -35,7 +35,7 @@ public class MemberServiceImpl implements MemberService {
         // 회원 생성
         Member member = Member.builder()
                 .memberId(request.getMemberId())
-                .userPwd(request.getUserPwd()) // 실제로는 BCrypt로 해시화해야 함
+                .memberPwd(request.getUserPwd())
                 .nickname(request.getNickname())
                 .email(request.getEmail())
                 .build();
@@ -52,8 +52,7 @@ public class MemberServiceImpl implements MemberService {
                         HttpStatus.BAD_REQUEST, 
                         "아이디 또는 비밀번호가 올바르지 않습니다."));
         
-        // 비밀번호 확인 (실제로는 BCrypt로 비교해야 함)
-        if (!member.getUserPwd().equals(request.getUserPwd())) {
+        if (!member.getMemberPwd().equals(request.getUserPwd())) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, 
                     "아이디 또는 비밀번호가 올바르지 않습니다.");
