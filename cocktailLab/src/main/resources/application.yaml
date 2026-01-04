@@ -42,3 +42,8 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+
+# JWT 설정
+jwt:
+  secret: dGhpc2lzYXZlcnlsb25nc2VjcmV0a2V5Zm9yan3R0b2tlbmdlbmVyYXRpb24=
+  expiration: 86400000  # 24시간 (밀리초)

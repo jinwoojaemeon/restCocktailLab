@@ -18,6 +18,7 @@ public class MemberResponse {
     private String memberId; // 로그인 아이디
     private String nickname;
     private String email;
+    private String token; // JWT 토큰 (로그인 시에만 포함)
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     
@@ -33,13 +34,14 @@ public class MemberResponse {
                 .build();
     }
     
-    // 로그인 응답용 (비밀번호 제외)
-    public static MemberResponse loginResponse(Member member) {
+    // 로그인 응답용 (JWT 토큰 포함)
+    public static MemberResponse loginResponse(Member member, String token) {
         return MemberResponse.builder()
                 .memberNo(member.getMemberNo())
                 .memberId(member.getMemberId())
                 .nickname(member.getNickname())
                 .email(member.getEmail())
+                .token(token)
                 .createdAt(member.getCreatedAt())
                 .updatedAt(member.getUpdatedAt())
                 .build();
